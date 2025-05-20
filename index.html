@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sri Kamala Hospital</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/png" href="favicon.ico">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+
+<body>
+
+
+
+  <header>
+  <img src="ChatGPT Image Apr 19, 2025, 01_22_02 AM.png" height="60" width="60" alt="Hospital Logo">
+  <h1>Sri Kamala Hospital</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="services.html">Services</a>
+    <a href="doctors.html">Doctors</a>
+  </nav>
+</header>
+
+  <a href="tel:+919999999999" class="emergency-call-btn" title="Call Emergency">
+    🚨 Emergency
+  </a>
+
+  <section class="features">
+
+    <div class="feature-box">
+      <i class="fas fa-user-md"></i>
+      <h4>Expert Doctors</h4>
+      <p>Our team consists of experienced professionals.</p>
+    </div>
+    <div class="feature-box">
+      <i class="fas fa-hospital"></i>
+      <h4>Modern Facility</h4>
+      <p>We use state-of-the-art equipment for diagnosis and treatment.</p>
+    </div>
+    <div class="feature-box">
+      <i class="fas fa-ambulance"></i>
+      <h4>24/7 Emergency</h4>
+      <p>Emergency services are available at all hours.</p>
+    </div>
+  </section>
+<section class="op-booking animated-booking">
+    <div class="icon-wrap">
+      <i class="fas fa-calendar-check animated-icon"></i>
+    </div>
+    <h3>బయటి రోగుల బుకింగ్ అందుబాటులో ఉంది</h3>
+    <p>మీ కన్సల్టేషన్‌ను ఆన్‌లైన్‌లో బుక్ చేసుకొని సమయాన్ని సేవ్ చేసుకోండి.</p>
+
+  </section>
+  <!-- Book Appointment Button -->
+  <div class="book-btn-container">
+    <center>
+      <a style="text-decoration: none;" href="appoinment.html" <button class="op-btn">Book OP</button></a>
+    </center>
+  </div>
+
+
+     <!-- Diagnosis and Medical Shop Section -->
+<section class="facility-section">
+    <h2 class="section-title">Facilities</h2>
+    <div class="facility-wrapper">
+
+      <!-- Diagnosis Card -->
+      <div class="facility-card diagnosis-card">
+        <i class="fas fa-vials icon-top"></i>
+        <h3>Diagnosis</h3>
+        <p>Advanced diagnostic lab tests</p>
+        <br>
+        <a style="text-decoration: none;" href="diagnosis.html" class="main-btn">Explore Diagnosis</a>
+      </div>
+
+      <!-- Medical Shop Card -->
+      <div class="facility-card medical-shop-card">
+        <i class="fas fa-pills" style="font-size: 45px; color: #008080; margin-bottom: 20px;"></i>
+
+        <h3>Medical Shop</h3>
+        <p>24x7 pharmacy available for all medicines</p>
+        <br>
+        <a style="text-decoration: none;" href="medical-shop.html" class="main-btn">Explore Medical</a>
+      </div>
+
+    </div>
+  </section>
+
+
+
+  <!-- Highlights -->
+  <section class="highlights">
+    <div class="highlight-box wow">
+      <i class="fas fa-hospital-symbol"></i>
+      <h3>10+</h3>
+      <p>Departments</p>
+    </div>
+    <div class="highlight-box wow">
+      <i class="fas fa-user-md"></i>
+      <h3>+</h3>
+      <p>Qualified Doctors</p>
+    </div>
+    <div class="highlight-box wow">
+      <i class="fas fa-smile-beam"></i>
+      <h3>1000+</h3>
+      <p>Happy Patients</p>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="testimonials">
+    <h2 class="testimonial-heading">What Our Patients Say</h2>
+    <div class="testimonial-box fade-in">
+      <p>“The staff at Sri Kamala Hospital were extremely helpful and caring. I felt very safe and well-treated.”</p>
+      <h4>– Lokesh .</h4>
+    </div>
+  </section>
+  <br><br>
+
+  <!-- OP Booking CTA -->
+
+
+  <!-- Newsletter -->
+  <section class="newsletter">
+    <h3>Subscribe to our Newsletter</h3>
+    <form class="newsletter-form">
+      <input type="email" placeholder="Enter your email" required />
+      <button type="submit" class="main-btn">Subscribe</button>
+    </form>
+  </section>
+
+  <footer>
+    <div id="chatbot">
+      <div class="chat-header">💬 Need Help? Chat with us!</div>
+      <div class="chat-body" id="chat-body"></div>
+      <div class="chat-footer">
+        <input type="text" id="chat-input" placeholder="Type your message..." />
+        <button onclick="sendMessage()">➤</button>
+      </div>
+    </div>
+
+    <button id="chat-toggle" onclick="toggleChat()">💬</button>
+
+    <script>
+      let chatVisible = false;
+
+      function toggleChat() {
+        chatVisible = !chatVisible;
+        document.getElementById("chatbot").style.display = chatVisible ? "flex" : "none";
+        if (chatVisible) {
+          setTimeout(() => botReply("Hi! How can I help you today? 👋"), 500);
+        }
+      }
+
+      function sendMessage() {
+        const input = document.getElementById("chat-input");
+        const msg = input.value.trim();
+        if (!msg) return;
+        addMessage("You", msg);
+        input.value = "";
+        setTimeout(() => botReply(getBotResponse(msg)), 800);
+      }
+
+      function addMessage(sender, message) {
+        const chat = document.getElementById("chat-body");
+        const bubble = document.createElement("div");
+        bubble.className = "chat-msg";
+        bubble.innerHTML = `<strong>${sender}:</strong> ${message}`;
+        chat.appendChild(bubble);
+        chat.scrollTop = chat.scrollHeight;
+      }
+
+      function botReply(message) {
+        addMessage("Bot", message);
+      }
+
+      function getBotResponse(input) {
+        const msg = input.toLowerCase();
+        if (msg.includes("bookop") || msg.includes("appointment")) {
+          return 'You can book an appointment <a href="appoinment.html" target="_blank">here</a>.';
+        }
+        if (msg.includes("time") || msg.includes("timing")) {
+          return "We are open from <strong>8AM to 8PM</strong>, all 7 days.";
+        }
+        if (msg.includes("doctor")) {
+          return 'You can view our doctors <a href="doctors.html" target="_blank">here</a>.';
+        }
+        if (msg.includes("location") || msg.includes("where")) {
+          return "We are located at <strong>123 Health Road, YourCity</strong>.";
+        }
+        if (msg.includes("blood test")) {
+          return 'You can book blood tests <a href="bloodtestbook.html" target="_blank">here</a>.';
+        }
+        if (msg.includes("emergency")) {
+          return "Please call our emergency line: <strong>+91-XXXXXXXXXX</strong>";
+        }
+        if (msg.includes("contact")) {
+          return 'You can contact us via the form <a href="contact.html" target="_blank">here</a>.';
+        }
+
+        return "Sorry, I didn’t understand that. Can you rephrase?";
+      }
+    </script>
+<div class="location-info">
+        <h4>Our Location</h4><br>
+        
+        <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3811.05353128582!2d79.6382875!3d17.831235799999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a34f21f5f0f93d1%3A0x1a2b3c4d5e6f7h8i!2sM.G+Road+Opp.+Tirumala+Grand+Resturant%2C+Suryapet!5e0!3m2!1sen!2sin!4v1678888888888"
+            width="300"
+            height="200"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy">
+        </iframe>
+        <p>M.G Road Opp. Tirumala Grand Resturant, Suryapet</p>
+    </div>
+    
+  </footer>
+  <div><center>
+    <p>&copy; 2025 Sri Kamala Hospital. All rights reserved.</p></center>
+    </div>
+  <footer style="text-align:center; padding: 20px; font-size: 14px; background-color: #e0f7fa;">
+  <a href="privacy.html">Privacy Policy</a> |
+  <a href="terms.html">Terms & Conditions</a> |
+  <a href="refund.html">Cancellation & Refund</a> |
+  <a href="shipping.html">Shipping & Delivery</a>
+  <a href="contact.html">Contact Us</a>
+</footer>
+
+</footer>
+
+
+
+  <script>
+   
+
+    // Scroll animations
+    const elements = document.querySelectorAll('[data-animate]');
+    const animateOnScroll = () => {
+      elements.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 50) {
+          el.classList.add('active');
+        }
+      });
+    };
+    window.addEventListener('scroll', animateOnScroll);
+    window.addEventListener('load', animateOnScroll);
+
+    // Back to top button
+    const backToTop = document.getElementById("backToTop");
+    window.addEventListener("scroll", () => {
+      backToTop.style.display = window.scrollY > 200 ? "block" : "none";
+    });
+    backToTop.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  </script>
+</body>
+
+</html>

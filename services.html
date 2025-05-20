@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Services | Sri Kamala Hospital</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: #f8fcff;
+      color: #333;
+    }
+
+    header {
+      background: linear-gradient(90deg, #64c9cf, #a7e8bd);
+      padding: 20px;
+      text-align: center;
+      color: white;
+    }
+
+    nav a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #1c1c1c;
+    }
+
+    .page-header {
+      text-align: center;
+      padding: 50px 20px 20px;
+      background-color: #e6f9f7;
+      animation: fadeSlideDown 1s ease forwards;
+    }
+
+    @keyframes fadeSlideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .services-section {
+      padding: 40px 5%;
+      background: #ffffff;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 30px;
+      animation: fadeIn 1.2s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .service-box {
+      background: #f1fdfb;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+      text-align: center;
+      transition: all 0.4s ease;
+      position: relative;
+    }
+
+    .service-box:hover {
+      transform: translateY(-10px);
+      background: #e0faf5;
+      box-shadow: 0 15px 25px rgba(0,0,0,0.1);
+    }
+
+    .service-box i {
+      font-size: 40px;
+      color: #32b6a1;
+      margin-bottom: 15px;
+      transition: transform 0.4s ease;
+    }
+
+    .service-box:hover i {
+      transform: rotate(10deg) scale(1.2);
+    }
+
+    .service-box h4 {
+      font-size: 20px;
+      margin-bottom: 10px;
+      color: #064e3b;
+    }
+
+    .service-box p {
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    footer {
+      background: #1f2937;
+      color: #fff;
+      text-align: center;
+      padding: 20px 10px;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Sri Kamala Hospital</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="doctors.html">Doctors</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <section class="page-header">
+    <h2>🌿 Our Premium Health Services</h2>
+    <p>Dedicated to your care and well-being</p>
+  </section>
+  <center>
+
+  <section class="services-section">
+    <div class="services-grid">
+      <div class="service-box">
+        <i class="fas fa-user-md"></i>
+        <h4>General Medicine</h4>
+        <p>Comprehensive care for adults including preventive and diagnostic services.</p>
+      </div>
+      <div class="service-box">
+        <i class="fas fa-heartbeat"></i>
+        <h4>Cardiology</h4>
+        <p>Advanced heart care services with state-of-the-art diagnostics and treatment.</p>
+      </div>
+      
+      
+      
+  </section>
+    </center>
+
+  <footer>
+    <div id="chatbot">
+      <div class="chat-header">💬 Need Help? Chat with us!</div>
+      <div class="chat-body" id="chat-body"></div>
+      <div class="chat-footer">
+        <input type="text" id="chat-input" placeholder="Type your message..." />
+        <button onclick="sendMessage()">➤</button>
+      </div>
+    </div>
+    
+    <button id="chat-toggle" onclick="toggleChat()">💬</button>
+    
+    <script>
+      let chatVisible = false;
+    
+      function toggleChat() {
+        chatVisible = !chatVisible;
+        document.getElementById("chatbot").style.display = chatVisible ? "flex" : "none";
+        if (chatVisible) {
+          setTimeout(() => botReply("Hi! How can I help you today? 👋"), 500);
+        }
+      }
+    
+      function sendMessage() {
+        const input = document.getElementById("chat-input");
+        const msg = input.value.trim();
+        if (!msg) return;
+        addMessage("You", msg);
+        input.value = "";
+        setTimeout(() => botReply(getBotResponse(msg)), 800);
+      }
+    
+      function addMessage(sender, message) {
+        const chat = document.getElementById("chat-body");
+        const bubble = document.createElement("div");
+        bubble.className = "chat-msg";
+        bubble.innerHTML = `<strong>${sender}:</strong> ${message}`;
+        chat.appendChild(bubble);
+        chat.scrollTop = chat.scrollHeight;
+      }
+    
+      function botReply(message) {
+        addMessage("Bot", message);
+      }
+    
+      function getBotResponse(input) {
+        const msg = input.toLowerCase();
+        if (msg.includes("bookop") || msg.includes("appointment")) {
+          return 'You can book an appointment <a href="appoinment.html" target="_blank">here</a>.';
+        }
+        if (msg.includes("time") || msg.includes("timing")) {
+          return "We are open from <strong>8AM to 8PM</strong>, all 7 days.";
+        }
+        if (msg.includes("doctor")) {
+          return 'You can view our doctors <a href="doctors.html" target="_blank">here</a>.';
+        }
+        if (msg.includes("location") || msg.includes("where")) {
+          return "We are located at <strong>123 Health Road, YourCity</strong>.";
+        }
+        if (msg.includes("blood test")) {
+          return 'You can book blood tests <a href="bloodtestbook.html" target="_blank">here</a>.';
+        }
+        if (msg.includes("emergency")) {
+          return "Please call our emergency line: <strong>+91-XXXXXXXXXX</strong>";
+        }
+        if (msg.includes("contact")) {
+          return 'You can contact us via the form <a href="contact.html" target="_blank">here</a>.';
+        }
+    
+        return "Sorry, I didn’t understand that. Can you rephrase?";
+      }
+    </script>
+    
+       
+    <p>&copy; 2025 Sri Kamala Hospital. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>

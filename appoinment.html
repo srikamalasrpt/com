@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Book Appointment - Sri Kamala Hospital</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f8fdfd;
+      color: #333;
+    }
+
+    header {
+      background-color: #e0f7fa;
+      padding: 20px 0;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #00796b;
+      font-size: 18px;
+      font-weight: 600;
+      transition: color 0.3s ease, transform 0.2s ease;
+      padding: 8px 16px;
+      border-radius: 6px;
+    }
+
+    nav a:hover {
+      background-color: #b2dfdb;
+      color: #004d40;
+      transform: scale(1.05);
+    }
+
+    nav a.active {
+      background-color: #00acc1;
+      color: #fff;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 60px auto;
+      padding: 30px;
+      background-color: white;
+      border-radius: 16px;
+      box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 0.7s ease-in-out;
+    }
+
+    h2 {
+      text-align: center;
+      color: #00b894;
+      margin-bottom: 20px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      margin-top: 8px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    .gender-section {
+      margin-top: 20px;
+    }
+
+    .gender-options {
+      display: flex;
+      gap: 20px;
+      margin-top: 8px;
+    }
+
+    .gender-options input[type="radio"] {
+      display: none;
+    }
+
+    .gender-options label {
+      background-color: #e0f7fa;
+      color: #00796b;
+      padding: 10px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    .gender-options input[type="radio"]:checked + label {
+      background-color: #00b894;
+      color: #fff;
+      border: 2px solid #00796b;
+      transform: scale(1.05);
+    }
+
+    .book-btn {
+      padding: 14px;
+      font-size: 18px;
+      font-weight: bold;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(270deg, #0078d7, #00b894, #0050b8);
+      background-size: 600% 600%;
+      color: #fff;
+      cursor: pointer;
+      margin-top: 25px;
+      width: 100%;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+    }
+
+    .modal-content {
+      background-color: #fff;
+      margin: 10% auto;
+      padding: 30px;
+      border-radius: 16px;
+      max-width: 400px;
+      text-align: center;
+      position: relative;
+    }
+
+    .close-icon {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 24px;
+      font-weight: bold;
+      color: #555;
+      cursor: pointer;
+    }
+
+    .cashfree-button {
+      text-decoration: none;
+      display: block;
+      margin-bottom: 15px;
+    }
+
+    .button-container {
+      background: linear-gradient(135deg, #d4af37, #b08d28);
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      padding: 10px 15px;
+      justify-content: center;
+      color: white;
+    }
+
+    .logo-container {
+      width: 40px;
+      height: 40px;
+    }
+
+    .text-container {
+      display: flex;
+      flex-direction: column;
+      margin-left: 12px;
+    }
+
+    .primary-text {
+      font-weight: bold;
+      font-size: 15px;
+    }
+
+    .payment-option {
+      background-color: #ccc;
+      border: none;
+      padding: 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      width: 100%;
+      font-weight: bold;
+    }
+
+    #hospitalConfirmation {
+      display: none;
+      margin-top: 20px;
+      font-size: 16px;
+      color: #00796b;
+    }
+
+    .appointment-summary {
+      margin-top: 30px;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <nav>
+      <a href="index.html" class="catalog-item active">Home</a>
+      <a href="services.html" class="catalog-item">Services</a>
+      <a href="diagnosis.html" class="catalog-item">Diagnosis</a>
+      <a href="contact.html" class="catalog-item">Contact</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h2>Book Your Appointment</h2>
+    <form id="appointmentForm">
+      <label for="name"><b>Full Name</b></label>
+      <input type="text" id="name" required>
+
+      <label for="age"><b>Age</b></label>
+      <input type="number" id="age" required min="0">
+
+      <div class="gender-section">
+        <label><b>Gender:</b></label>
+        <div class="gender-options">
+          <input type="radio" id="male" name="gender" value="Male" required>
+          <label for="male">Male</label>
+
+          <input type="radio" id="female" name="gender" value="Female">
+          <label for="female">Female</label>
+
+          <input type="radio" id="other" name="gender" value="Other">
+          <label for="other">Other</label>
+        </div>
+      </div><br>
+
+      <label for="phone"><b>Phone Number</b></label>
+      <input type="tel" id="phone" required>
+
+      <label for="department"><b>Department</b></label>
+      <select id="department" required>
+        <option value="">Select Department</option>
+        <option value="General Medicine">General Medicine</option>
+        <option value="Cardiology">Cardiology</option>
+      </select>
+
+      <label for="date"><b>Appointment Date</b></label>
+      <input type="date" id="date" required>
+
+      <button type="submit" class="book-btn">📅 Book Now</button>
+    </form>
+
+    <div class="appointment-summary" style="display:none;">
+      <h3>Your Appointment Summary:</h3>
+      <p><strong>Name:</strong> <span id="selectedName"></span></p>
+      <p><strong>Age:</strong> <span id="selectedAge"></span></p>
+      <p><strong>Gender:</strong> <span id="selectedGender"></span></p>
+      <p><strong>Phone:</strong> <span id="selectedPhone"></span></p>
+      <p><strong>Department:</strong> <span id="selectedDepartment"></span></p>
+      <p><strong>Appointment Date:</strong> <span id="selectedDate"></span></p>
+      <p><strong>Token Number:</strong> <span id="selectedToken"></span></p>
+    </div>
+  </div>
+
+  <!-- MODAL -->
+  <div class="modal" id="paymentModal">
+    <div class="modal-content">
+      <span class="close-icon" id="modalCloseBtn">&times;</span>
+      <h3>Choose Payment Option</h3>
+
+      <a href="https://payments.cashfree.com/forms?code=op-booking" target="_blank" class="cashfree-button">
+        <div class="button-container">
+          <img src="https://cashfree-checkoutcartimages-prod.cashfree.com/ChatGPT%20Image%20Apr%2019,%202025,%2001_22_02%20AMB8j5ovlrsvg0_prod.png" alt="logo" class="logo-container">
+          <div class="text-container">
+            <div class="primary-text">Pay Now</div>
+          </div>
+        </div>
+      </a>
+
+      <button class="payment-option" id="payHospitalBtn">Pay at Hospital</button>
+
+      <div id="hospitalConfirmation">
+        ✅ Go and pay at hospital and collect the receipt!
+        <p>Please arrive at least 20 minutes early. Payment can be made at the reception desk only.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('appointmentForm');
+    const modal = document.getElementById('paymentModal');
+    const closeBtn = document.getElementById('modalCloseBtn');
+    const payHospitalBtn = document.getElementById('payHospitalBtn');
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (form.reportValidity()) {
+        modal.style.display = 'block';
+        form.querySelectorAll('input, select, button').forEach(el => el.disabled = true);
+      }
+    });
+
+    closeBtn.addEventListener('click', () => {
+      modal.style.display = 'none';
+      form.querySelectorAll('input, select, button').forEach(el => el.disabled = false);
+    });
+
+    window.addEventListener('click', function (e) {
+      if (e.target === modal) {
+        modal.style.display = 'none';
+        form.querySelectorAll('input, select, button').forEach(el => el.disabled = false);
+      }
+    });
+
+    document.querySelector('.cashfree-button').addEventListener('click', () => {
+      const name = document.getElementById('name').value;
+      const age = document.getElementById('age').value;
+      const phone = document.getElementById('phone').value;
+      const department = document.getElementById('department').value;
+      const date = document.getElementById('date').value;
+      const gender = document.querySelector('input[name="gender"]:checked').value;
+
+      let token = localStorage.getItem('kamalaTokenNumber');
+      token = token ? parseInt(token) + 1 : 1;
+      const formattedToken = `KAMALA_OP(${String(token).padStart(3, '0')})`;
+
+      localStorage.setItem('kamalaTokenNumber', token);
+      localStorage.setItem('appointmentToken', formattedToken);
+      localStorage.setItem('patientName', name);
+      localStorage.setItem('patientAge', age);
+      localStorage.setItem('patientPhone', phone);
+      localStorage.setItem('patientGender', gender);
+      localStorage.setItem('patientDepartment', department);
+      localStorage.setItem('appointmentDate', date);
+    });
+
+    payHospitalBtn.addEventListener('click', () => {
+      document.querySelector('#hospitalConfirmation').style.display = 'block';
+      document.querySelector('.cashfree-button').style.display = 'none';
+      payHospitalBtn.style.display = 'none';
+    });
+  </script>
+
+</body>
+
+</html>

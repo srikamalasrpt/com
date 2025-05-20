@@ -1,0 +1,833 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  background-color: #ffffff;
+  color: #003B4A;
+}
+
+/* ---------- HEADER ---------- */
+/* Header container styling */
+header {
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 10px 15px;
+background-color: #e0f7fa; /* light blue background */
+flex-wrap: wrap;
+}
+
+/* Logo image */
+header img {
+height: 60px;
+width: 60px;
+flex-shrink: 0;
+}
+
+/* Hospital title */
+header h1 {
+flex: 1 1 auto;
+margin: 0 15px;
+font-size: 1.5rem;
+text-align: center;
+color: #006666;
+white-space: nowrap;
+}
+
+/* Navigation bar default style */
+header nav {
+display: flex;
+gap: 15px;
+}
+
+/* Nav links */
+header nav a {
+text-decoration: none;
+color: #006666;
+font-weight: 600;
+padding: 8px 12px;
+border-radius: 5px;
+white-space: nowrap;
+transition: background-color 0.3s;
+}
+
+header nav a:hover,
+header nav a:focus {
+background-color: #008080;
+color: #fff;
+}
+
+/* MOBILE STYLES */
+@media (max-width: 768px) {
+/* Stack logo and title on top */
+header {
+  flex-direction: column;
+  align-items: center;
+}
+
+header h1 {
+  margin: 10px 0;
+  font-size: 1.3rem;
+}
+
+/* Nav: horizontal scroll with no wrap */
+header nav {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  padding-bottom: 10px;
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Hide scrollbar */
+header nav::-webkit-scrollbar {
+  display: none;
+}
+
+/* Nav links */
+header nav a {
+  flex: 0 0 auto;
+  padding: 10px 15px;
+  font-size: 1rem;
+}
+}
+
+
+/* ---------- HERO ---------- */
+.hero {
+  background: linear-gradient(rgba(0, 59, 74, 0.7), rgba(0, 59, 74, 0.7)), 
+              url('https://images.unsplash.com/photo-1588776814546-ec7d49639c69') center/cover;
+  color: white;
+  padding: 100px 40px;
+  text-align: center;
+  animation: slideIn 1s ease-in-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero h2 {
+  font-size: 42px;
+  margin-bottom: 20px;
+  animation: fadeInText 2s ease-in-out;
+}
+
+@keyframes fadeInText {
+  0% {
+    letter-spacing: -2px;
+    opacity: 0;
+  }
+  100% {
+    letter-spacing: 1px;
+    opacity: 1;
+  }
+}
+
+/* ---------- BUTTONS ---------- */
+.main-btn {
+  background-color: #00B894;
+  color: white;
+  padding: 10px 25px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  display: inline-block;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  animation: bounceIn 1.2s ease-out;
+}
+.newsletter {
+  text-align: center;
+  padding: 50px 20px;
+  background-color: #f0fdfc;
+}
+
+.newsletter h3 {
+  font-size: 28px;
+  color: #003B4A;
+  margin-bottom: 20px;
+  animation: fadeUp 1s ease-in-out;
+}
+
+.newsletter-form {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.newsletter-form input[type="email"] {
+  padding: 12px 15px;
+  border: 2px solid #00B894;
+  border-radius: 6px;
+  font-size: 16px;
+  min-width: 250px;
+}
+
+.newsletter-form input:focus {
+  outline: none;
+  border-color: #009f7a;
+  box-shadow: 0 0 5px rgba(0, 185, 148, 0.5);
+}
+
+
+@keyframes bounceIn {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.main-btn:hover {
+  background-color: #009f7a;
+  transform: scale(1.05);
+}
+
+/* ---------- FEATURES ---------- */
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 30px;
+  padding: 40px;
+  background-color: #E6F5F3;
+}
+
+.feature-box {
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 59, 74, 0.1);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.8s forwards;
+}
+
+.feature-box:nth-child(1) { animation-delay: 0.2s; }
+.feature-box:nth-child(2) { animation-delay: 0.4s; }
+.feature-box:nth-child(3) { animation-delay: 0.6s; }
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.feature-box i {
+  font-size: 30px;
+  margin-bottom: 10px;
+  color: #00B894;
+}
+
+/* ---------- OP BOOKING ---------- */
+.op-booking {
+  background-color: #00B894;
+  color: white;
+  padding: 40px;
+  text-align: center;
+  position: relative;
+}
+
+.op-booking h3 {
+  margin-bottom: 10px;
+}
+
+.op-btn {
+  margin-top: 20px;
+  background: linear-gradient(135deg, #00B894, #009f7a);
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  font-size: 18px;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 10px 20px rgba(0, 59, 74, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: pulse 2s infinite;
+}
+
+.op-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 12px 24px rgba(0, 255, 204, 0.6);
+  animation: none;
+  filter: brightness(1.1);
+}
+
+/* Pulsing */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.book-btn-container {
+text-align: center;
+margin: 40px 0;
+}
+
+.book-btn-container .op-btn {
+animation: pulse 2s infinite;
+}
+
+
+/* ---------- FOOTER ---------- */
+footer {
+  background-color: #003B4A;
+  color: white;
+ display: flex;
+ flex-wrap: wrap;
+ justify-content: space-around;
+  padding: 40px 20px;
+  animation: fadeDown 1s ease-in;
+}
+
+/* Location Section Styling */
+.footer-location {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.footer-location h4 {
+  margin-bottom: 15px;
+  color: orange; /* Match header title color */
+  font-size: 1.2em;
+}
+
+.footer-location iframe {
+  position:fixed;
+  border: 0;
+  width: 20%;
+  max-width: 100px; /* Max width for the map */
+  height: 50px;
+  margin-bottom: 10px;
+  border-radius: 10px; /* Rounded corners for the map */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.animated-booking {
+  background: linear-gradient(135deg, #b88100, #52009f);
+  color: white;
+  text-align: center;
+  padding: 60px 30px;
+  position: relative;
+  overflow: hidden;
+  animation: fadeInUp 1s ease;
+  border-radius: 20px;
+}
+
+.animated-booking h3 {
+  font-size: 28px;
+  margin-bottom: 10px;
+  animation: slideInTop 1s ease;
+}
+
+.animated-booking p {
+  font-size: 18px;
+  margin-bottom: 20px;
+  animation: fadeIn 1.5s ease;
+}
+
+.animated-booking .main-btn {
+  font-size: 18px;
+  padding: 15px 35px;
+  border-radius: 50px;
+  animation: bounceIn 2s ease infinite alternate;
+}
+
+.icon-wrap {
+  font-size: 40px;
+  margin-bottom: 15px;
+  animation: pulseIcon 2s infinite;
+}
+
+.animated-icon {
+  color: #ffffff;
+}
+
+/* Animations */
+@keyframes slideInTop {
+  from {
+    transform: translateY(-30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes pulseIcon {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.05);
+  }
+}
+.diagnosis-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  padding: 40px;
+  background-color: #E6F5F3;
+  justify-items: center;
+}
+
+.diagnosis-card {
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 59, 74, 0.1);
+  transition: transform 0.4s ease;
+  max-width: 350px;
+}
+
+.diagnosis-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.diagnosis-card:hover {
+  transform: translateY(-8px);
+}
+
+canvas {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 59, 74, 0.1);
+  margin-top: 30px;
+}
+/* Highlights Section */
+.highlights {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  padding: 50px 20px;
+  background-color: #f7fafc;
+  flex-wrap: wrap;
+  animation: fadeIn 1s ease;
+}
+
+.highlight-box {
+  background: white;
+  padding: 30px 20px;
+  text-align: center;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 59, 74, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 220px;
+}
+
+.highlight-box:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(0, 59, 74, 0.2);
+}
+
+.highlight-box i {
+  font-size: 36px;
+  color: #00B894;
+  margin-bottom: 10px;
+}
+
+/* Testimonials Section */
+.testimonials {
+  background: linear-gradient(135deg, #0075b8, #7a9f00);
+  color: white;
+  padding: 60px 20px;
+  text-align: center;
+  animation: fadeInUp 1s ease-in-out;
+}
+
+.testimonial-heading {
+  font-size: 28px;
+  margin-bottom: 40px;
+}
+
+.testimonial-box {
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 30px;
+  border-radius: 10px;
+  font-style: italic;
+  animation: slideIn 1s ease;
+}
+
+.testimonial-box p {
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.testimonial-box h4 {
+  margin-top: 20px;
+  font-weight: normal;
+  color: #e0ffe9;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-40px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+.facility-section {
+  background-color: #e6f5f3;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.facility-section .section-title {
+  font-size: 32px;
+  color: #003B4A;
+  margin-bottom: 40px;
+}
+
+.facility-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.facility-card {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  width: 300px;
+  max-width: 90%;
+  box-shadow: 0 8px 20px rgba(0, 59, 74, 0.1);
+  text-align: center;
+}
+
+.facility-card img,
+.facility-card .icon-top {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 20px;
+}
+
+.facility-card .icon-top {
+  font-size: 60px;
+  color: #008080;
+}
+
+@media (max-width: 768px) {
+  .facility-wrapper {
+    flex-direction: rows;
+    align-items: center;
+  }
+}
+/* Medical Card Styling (same as diagnosis) */
+.medical-shop-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 30px;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(0, 59, 74, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: zoomIn 0.8s ease;
+}
+
+/* Hover Effect */
+.medical-shop-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0, 59, 74, 0.2);
+}
+
+/* Image inside medical card */
+.medical-shop-card img {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 20px;
+  animation: floatPulse 2.5s infinite;
+}
+
+/* Optional: Reuse existing animations */
+@keyframes zoomIn {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes floatPulse {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+#chatbot {
+  position: fixed;
+  bottom: 70px;
+  right: 20px;
+  width: 300px;
+  background: rgb(237, 237, 235);
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 9999;
+}
+
+.chat-header {
+  background: orange;
+  color: white;
+  padding: 10px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.chat-body {
+  height: 250px;
+  overflow-y: auto;
+  padding: 10px;
+  font-size: 14px;
+  color: black;
+}
+
+.chat-footer {
+  display: flex;
+  border-top: 1px solid #ddd;
+}
+
+.chat-footer input {
+  flex: 1;
+  border: none;
+  padding: 10px;
+  outline: none;
+}
+
+.chat-footer button {
+  background: orange;
+  border: none;
+  color: rgb(224, 43, 43);
+  padding: 10px;
+  cursor: pointer;
+}
+
+#chat-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: orange;
+  color: rgb(246, 12, 12);
+  border: none;
+  border-radius: 50%;
+  padding: 15px;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 9999;
+}
+/* Chat toggle button */
+#chat-toggle {
+position: fixed;
+bottom: 20px;
+right: 20px;
+background-color: #00bcd4;
+color: white;
+border: none;
+padding: 12px 16px;
+border-radius: 50%;
+font-size: 20px;
+cursor: pointer;
+z-index: 1000;
+box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+animation: pulse 2s infinite;
+}
+
+/* Hover effect */
+#chat-toggle:hover {
+background-color: #0194a8;
+}
+
+/* Pulse animation */
+@keyframes pulse {
+0% {
+  box-shadow: 0 0 0 0 rgba(0, 188, 212, 0.7);
+}
+70% {
+  box-shadow: 0 0 0 15px rgba(0, 188, 212, 0);
+}
+100% {
+  box-shadow: 0 0 0 0 rgba(0, 188, 212, 0);
+}
+}
+
+/* New badge */
+#chat-toggle::after {
+content: "New!";
+position: absolute;
+top: -10px;
+right: -10px;
+background-color: red;
+color: white;
+font-size: 10px;
+padding: 2px 5px;
+border-radius: 10px;
+font-weight: bold;
+}
+
+/* Chat box */
+#chatbot {
+position: fixed;
+bottom: 80px;
+right: 20px;
+width: 300px;
+max-height: 450px;
+background: #fff;
+border-radius: 10px;
+border: 1px solid #ccc;
+display: none;
+flex-direction: column;
+box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+z-index: 999;
+}
+.emergency-call-btn {
+position: fixed;
+bottom: 20px;
+right: 1350px;
+background-color: red;
+color: white;
+font-weight: bold;
+padding: 12px 20px;
+border-radius: 50px;
+text-decoration: none;
+box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+z-index: 1000;
+animation: pulse 2s infinite;
+transition: background 0.3s ease;
+}
+
+.emergency-call-btn:hover {
+background-color: darkred;
+}
+
+/* Pulse Animation */
+@keyframes pulse {
+0% {
+  box-shadow: 0 0 0 0 rgba(255,0,0,0.5);
+}
+70% {
+  box-shadow: 0 0 0 15px rgba(255,0,0,0);
+}
+100% {
+  box-shadow: 0 0 0 0 rgba(255,0,0,0);
+}
+}
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+#chatbot {
+  width: 90%;
+  right: 5%;
+  bottom: 80px;
+}
+
+#chat-toggle {
+  right: 5%;
+  bottom: 20px;
+}
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 768px) {
+  header, .hero, .features, .op-booking, footer {
+    padding: 20px;
+  }
+  .hero h2 {
+    font-size: 28px;
+  }
+}
+/* Navbar Base */

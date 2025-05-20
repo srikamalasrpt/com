@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Diagnosis - Sri Kamala Hospital</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" href="diagnosis.css">
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Sri Kamala Hospital</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="services.html">Services</a>
+      <a href="diagnosis.html">Diagnosis</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h2>Diagnosis & Testing</h2>
+  </section>
+
+  <center>
+    <!-- Blood Test Card -->
+    <section class="diagnosis-section">
+      <div class="diagnosis-card animate">
+        <img src="bllod.png" alt="Blood Test" />
+        <h3>Blood Test</h3>
+        <p>We provide accurate and quick blood testing including:</p>
+        <ul>
+          <li>Complete Blood Count (CBC)</li>
+          <li>Blood Sugar</li>
+          <li>Hemoglobin</li>
+          <li>Cholesterol</li>
+        </ul>
+        <div class="report-download">
+          <h4>Want to see a Sample Report?</h4>
+          <a style="text-decoration: none;" href="sample.jpeg" class="main-btn" download>Download Sample Report</a>
+        </div>
+        <br>
+       
+      
+      </div>
+    </section>
+
+   
+  </center>
+  <div class="book-test-btn" style="margin-top: 20px;">
+    <a href="bloodtestbook.html" class="main-btn">Book Blood Test</a>
+  </div>
+
+  <footer>
+    <div id="chatbot">
+      <div class="chat-header">💬 Need Help? Chat with us!</div>
+      <div class="chat-body" id="chat-body"></div>
+      <div class="chat-footer">
+        <input type="text" id="chat-input" placeholder="Type your message..." />
+        <button onclick="sendMessage()">➤</button>
+      </div>
+    </div>
+    
+    <button id="chat-toggle" onclick="toggleChat()">💬</button>
+    
+    <script>
+      let chatVisible = false;
+    
+      function toggleChat() {
+        chatVisible = !chatVisible;
+        document.getElementById("chatbot").style.display = chatVisible ? "flex" : "none";
+        if (chatVisible) {
+          setTimeout(() => botReply("Hi! How can I help you today? 👋"), 500);
+        }
+      }
+    
+      function sendMessage() {
+        const input = document.getElementById("chat-input");
+        const msg = input.value.trim();
+        if (!msg) return;
+        addMessage("You", msg);
+        input.value = "";
+        setTimeout(() => botReply(getBotResponse(msg)), 800);
+      }
+    
+      function addMessage(sender, message) {
+        const chat = document.getElementById("chat-body");
+        const bubble = document.createElement("div");
+        bubble.className = "chat-msg";
+        bubble.innerHTML = `<strong>${sender}:</strong> ${message}`;
+        chat.appendChild(bubble);
+        chat.scrollTop = chat.scrollHeight;
+      }
+    
+      function botReply(message) {
+        addMessage("Bot", message);
+      }
+    
+      function getBotResponse(input) {
+        const msg = input.toLowerCase();
+        if (msg.includes("bookop") || msg.includes("appointment")) {
+          return 'You can book an appointment <a href="appoinment.html" target="_blank">here</a>.';
+        }
+        if (msg.includes("time") || msg.includes("timing")) {
+          return "We are open from <strong>8AM to 8PM</strong>, all 7 days.";
+        }
+        if (msg.includes("doctor")) {
+          return 'You can view our doctors <a href="doctors.html" target="_blank">here</a>.';
+        }
+        if (msg.includes("location") || msg.includes("where")) {
+          return "We are located at <strong>123 Health Road, YourCity</strong>.";
+        }
+        if (msg.includes("blood test")) {
+          return 'You can book blood tests <a href="bloodtestbook.html" target="_blank">here</a>.';
+        }
+        if (msg.includes("emergency")) {
+          return "Please call our emergency line: <strong>+91-XXXXXXXXXX</strong>";
+        }
+        if (msg.includes("contact")) {
+          return 'You can contact us via the form <a href="contact.html" target="_blank">here</a>.';
+        }
+    
+        return "Sorry, I didn’t understand that. Can you rephrase?";
+      }
+    </script>
+    
+       
+    <p>&copy; 2025 Sri Kamala Hospital. All rights reserved.</p>
+  </footer>
+</body>
+</html>

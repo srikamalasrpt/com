@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Appointment Receipt - Sri Kamala Hospital</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #fff;
+      padding: 40px;
+      margin: 0;
+    }
+    .container {
+  max-width: 500px;
+  margin: 60px auto;
+  padding: 30px;
+}
+input, select, .book-btn {
+  width: 100%;
+}
+
+    .receipt-box {
+      max-width: 700px;
+      margin: auto;
+      border: 1px solid #ccc;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      background-color: #fefefe;
+    }
+
+    h1, h2 {
+      text-align: center;
+      color: #00a6b8;
+      margin-bottom: 10px;
+    }
+
+    .hospital-info {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 16px;
+      color: #333;
+    }
+
+    .receipt-details {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 30px;
+    }
+
+    .receipt-details td {
+      padding: 12px 15px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .receipt-details td.label {
+      font-weight: bold;
+      color: #444;
+      width: 40%;
+    }
+
+    .note {
+      font-size: 15px;
+      color: #c0392b;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .print-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin: 30px auto 0;
+      padding: 12px 24px;
+      background-color: #00b88a;
+      color: #fff;
+      border: none;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0, 80, 184, 0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: fadeIn 0.6s ease-in-out;
+    }
+
+    .print-btn:hover {
+      background-color: #003f96;
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(0, 80, 184, 0.4);
+      animation: pulse 1.2s infinite;
+    }
+
+    .print-btn:active {
+      animation: clickBounce 0.3s ease;
+    }
+    .modal {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+}
+img{
+  display: block;
+  margin: 0 auto;
+}
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(0, 80, 184, 0.7);
+      }
+      70% {
+        box-shadow: 0 0 0 10px rgba(0, 80, 184, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(0, 80, 184, 0);
+      }
+    }
+
+    @keyframes clickBounce {
+      0% {
+        transform: scale(0.95);
+      }
+      50% {
+        transform: scale(1.05);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    @media print {
+      .print-btn {
+        display:none;
+      }
+
+      body {
+        background: white;
+        padding: 0;
+      }
+
+      .receipt-box {
+        box-shadow: none;
+        border: none;
+        padding: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="receipt-box">
+    <img src="ChatGPT Image Apr 19, 2025, 01_22_02 AM.png" width="90" height="80">
+    <h1>Sri Kamala Hospital</h1>
+    <div class="hospital-info">
+      Opp. Tirumala Grand resturant, Suryapet - 508213<br>
+      Phone: 9948076665 | Email: srikamalahospitalsrpt@gmail.com
+    </div>
+    <h2>Appointment Receipt</h2>
+    <br><br><br>
+    <table class="receipt-details">
+      <tr>
+        <td class="label">Token Number:</td>
+        <td id="token"></td>
+      </tr>
+      <tr>
+        <td class="label">Name:</td>
+        <td id="name"></td>
+      </tr>
+      <tr>
+        <td class="label">Age:</td>
+        <td id="age"></td>
+      </tr>
+      <tr>
+        <td class="label">Phone:</td>
+        <td id="phone"></td>
+      </tr>
+      <tr>
+        <td class="label">Department:</td>
+        <td id="department"></td>
+      </tr>
+      <tr>
+        <td class="label">Appointment Date:</td>
+        <td id="date"></td>
+      </tr>
+      <tr>
+        <td class="label">Payment ID:</td>
+        <td id="paymentId"></td>
+      </tr>
+    </table>
+    
+
+    <div class="note">
+      * Please bring this receipt or a screenshot on the appointment day.
+    </div>
+    <button class="print-btn" onclick="window.print()">🖨️ Print Receipt</button>
+  </div>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const token = localStorage.getItem('appointmentToken');
+    if (!token) {
+      alert('No appointment data found. Please book an appointment first.');
+      window.location.href = 'index.html';
+      return;
+    }
+
+    // Populate the receipt
+    document.getElementById('name').textContent = localStorage.getItem('patientName');
+    document.getElementById('age').textContent = localStorage.getItem('patientAge');
+    document.getElementById('phone').textContent = localStorage.getItem('patientPhone');
+    document.getElementById('department').textContent = localStorage.getItem('patientDepartment');
+    document.getElementById('date').textContent = localStorage.getItem('appointmentDate');
+    document.getElementById('token').textContent = token;
+
+    // Optional: Payment ID (if available)
+    const paymentId = new URLSearchParams(window.location.search).get('payment_id');
+    if (paymentId) {
+      document.getElementById('paymentId').textContent = paymentId;
+      localStorage.setItem('paymentId', paymentId); // Store if needed
+    } else {
+      document.getElementById('paymentId').textContent = 'N/A';
+    }
+  });
+</script>
+
+
+  
+</body>
+</html>
