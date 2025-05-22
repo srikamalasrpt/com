@@ -2,242 +2,229 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Blood Test Receipt</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <title>Diagnosis Receipt - Sri Kamala Hospital</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #fff;
+      padding: 40px;
       margin: 0;
-      padding: 0;
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(to right, #e0f7fa, #ffffff);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
     }
 
-    .receipt-card {
-      background: white;
-      border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-      padding: 30px;
-      max-width: 500px;
-      width: 90%;
-      animation: slideIn 0.6s ease-in-out;
-      position: relative;
-      box-sizing: border-box;
+    .receipt-box {
+      max-width: 700px;
+      margin: auto;
+      border: 1px solid #ccc;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      background-color: #fefefe;
     }
 
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateY(-30px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .receipt-header {
+    h1, h2 {
       text-align: center;
+      color: #00a6b8;
+      margin-bottom: 10px;
+    }
+
+    .hospital-info {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 16px;
+      color: #333;
+    }
+
+    .receipt-details {
+      width: 100%;
+      border-collapse: collapse;
       margin-bottom: 30px;
     }
 
-    .receipt-header img {
-      width: 60px;
-      height: 60px;
-      border-radius: 80%;
-      margin-bottom: 8px;
-      object-fit: contain;
+    .receipt-details td {
+      padding: 12px 15px;
+      border-bottom: 1px solid #ddd;
     }
 
-    .receipt-header h1 {
-      margin: 0;
-      font-size: 22px;
-      color: #ef6407;
+    .receipt-details td.label {
+      font-weight: bold;
+      color: #444;
+      width: 40%;
     }
 
-    .receipt-header p {
-      margin: 2px 0;
-      font-size: 14px;
-      color: #095190;
-    }
-
-    .receipt-card h2 {
-      color: #00796b;
+    .note {
+      font-size: 15px;
+      color: #c0392b;
       text-align: center;
-      margin: 30px 0;
-    }
-
-    .receipt-card p {
-      font-size: 16px;
-      margin: 8px 0;
-    }
-
-    .receipt-card ul {
-      list-style: none;
-      padding: 0;
-    }
-
-    .receipt-card ul li {
-      background: #e0f2f1;
-      margin: 6px 0;
-      padding: 10px 12px;
-      border-radius: 10px;
-    }
-
-    #qrcode {
-      display: flex;
-      justify-content: center;
-      margin-top: 30px;
+      margin-top: 20px;
     }
 
     .print-btn {
-      margin-top: 20px;
-      display: block;
-      background-color: #009673;
-      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin: 30px auto 0;
+      padding: 12px 24px;
+      background-color: #00b88a;
+      color: #fff;
       border: none;
-      padding: 12px 20px;
-      border-radius: 30px;
-      cursor: pointer;
-      font-weight: bold;
       font-size: 16px;
-      transition: all 0.3s ease;
-      width: 100%;
-      text-align: center;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0, 80, 184, 0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: fadeIn 0.6s ease-in-out;
     }
 
     .print-btn:hover {
-      background-color: #00796b;
+      background-color: #003f96;
       transform: scale(1.05);
-      box-shadow: 0 4px 15px rgba(0, 150, 136, 0.3);
+      box-shadow: 0 6px 20px rgba(0, 80, 184, 0.4);
+      animation: pulse 1.2s infinite;
     }
 
-    .top-navbar {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      z-index: 10000;
-      display: flex;
-      align-items: center;
-      background: #009673;
-      padding: 10px 18px;
-      border-radius: 30px;
-      box-shadow: 0 5px 15px rgba(0, 150, 115, 0.5);
-      transition: background-color 0.3s ease, transform 0.2s ease;
-      cursor: pointer;
+    .print-btn:active {
+      animation: clickBounce 0.3s ease;
     }
 
-    .top-navbar:hover {
-      background-color: #00796b;
-      transform: scale(1.1);
+    img {
+      display: block;
+      margin: 0 auto;
     }
 
-    .back-arrow {
-      color: white;
-      font-weight: 600;
-      font-size: 16px;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
-    .back-arrow svg {
-      fill: white;
-      width: 20px;
-      height: 20px;
-      transition: transform 0.3s ease;
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(0, 80, 184, 0.7);
+      }
+      70% {
+        box-shadow: 0 0 0 10px rgba(0, 80, 184, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(0, 80, 184, 0);
+      }
     }
 
-    .top-navbar:hover .back-arrow svg {
-      transform: translateX(-5px);
+    @keyframes clickBounce {
+      0% {
+        transform: scale(0.95);
+      }
+      50% {
+        transform: scale(1.05);
+      }
+      100% {
+        transform: scale(1);
+      }
     }
 
     @media print {
-      .print-btn, .top-navbar {
+      .print-btn {
         display: none;
+      }
+      body {
+        background: white;
+        padding: 0;
+      }
+      .receipt-box {
+        box-shadow: none;
+        border: none;
+        padding: 0;
       }
     }
   </style>
 </head>
 <body>
-
-  <nav class="top-navbar" onclick="window.location.href='bloodtestbook.html'">
-    <a class="back-arrow">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-        <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
-      </svg>
-      Back to Booking
-    </a>
-  </nav>
-
-  <div class="receipt-card">
-    <div class="receipt-header">
-      <img src="ChatGPT Image Apr 19, 2025, 01_22_02 AM.png" alt="Hospital Logo" />
-      <h1>SRI KAMALA DIAGNOSTICS</h1>
-      <p>Opp.Trirumala Grand Restaurant, M.G. Road, Suryapet</p>
-      <p>Cell : +91 9866895634</p>
+  <div class="receipt-box">
+    <img src="ChatGPT Image Apr 19, 2025, 01_22_02 AM.png" width="90" height="80" />
+    <h1>Sri Kamala Hospital</h1>
+    <div class="hospital-info">
+      Opp. Tirumala Grand Restaurant, Suryapet - 508213<br />
+      Phone: 9948076665 | Email: srikamalahospitalsrpt@gmail.com
     </div>
+    <h2>Diagnosis Receipt</h2>
 
-    <h2>Blood Test Receipt</h2>
-    <p><strong>Name:</strong> <span id="nameDisplay">-</span></p><br>
-    <p><strong>Gender:</strong> <span id="genderDisplay">-</span></p><br>
-    <p><strong>Token Number:</strong> <span id="tokenDisplay">-</span></p><br>
-    <p><strong>Date & Time:</strong> <span id="dateTimeDisplay">-</span></p><br>
+    <table class="receipt-details">
+      <tr>
+        <td class="label">Token Number:</td>
+        <td id="token"></td>
+      </tr>
+      <tr>
+        <td class="label">Name:</td>
+        <td id="name"></td>
+      </tr>
+      <tr>
+        <td class="label">Age:</td>
+        <td id="age"></td>
+      </tr>
+      <tr>
+        <td class="label">Gender:</td>
+        <td id="gender"></td>
+      </tr>
+      <tr>
+        <td class="label">Phone:</td>
+        <td id="phone"></td>
+      </tr>
+      <tr>
+        <td class="label">Email:</td>
+        <td id="email"></td>
+      </tr>
+      <tr>
+        <td class="label">Tests Booked:</td>
+        <td id="tests"></td>
+      </tr>
+    </table>
 
-    <p><strong>Selected Tests:</strong></p><br>
-    <ul id="testList"></ul>
-
-    <div id="qrcode"></div>
+    <div class="note">
+      * Please bring this receipt or a screenshot when you visit for diagnosis.
+    </div>
     <button class="print-btn" onclick="window.print()">🖨️ Print Receipt</button>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
   <script>
-    function getQueryParams() {
-      const params = new URLSearchParams(window.location.search);
-      const token = params.get("token");
-      const name = params.get("name");
-      const gender = params.get("gender");
-      let tests = [];
-      try {
-        tests = JSON.parse(decodeURIComponent(params.get("tests") || "[]"));
-      } catch (e) {
-        tests = [];
-      }
-      return { token, name, gender, tests };
-    }
+    document.addEventListener("DOMContentLoaded", () => {
+      const token = localStorage.getItem("dxToken");
+      const name = localStorage.getItem("dxName");
+      const age = localStorage.getItem("dxAge");
+      const gender = localStorage.getItem("dxGender");
+      const phone = localStorage.getItem("dxPhone");
+      const email = localStorage.getItem("dxEmail");
+      console.log("dxToken:", token);
+console.log("dxName:", localStorage.getItem("dxName"));
+console.log("dxGender:", localStorage.getItem("dxGender"));
+console.log("dxTests:", localStorage.getItem("dxTests"));
 
-    function formatDateTime() {
-      const now = new Date();
-      return now.toLocaleString("en-IN", {
-        day: "2-digit", month: "short", year: "numeric",
-        hour: "2-digit", minute: "2-digit", second: "2-digit"
-      });
-    }
+      const tests = JSON.parse(localStorage.getItem("dxTests") || "[]");
+document.getElementById("tests").textContent = tests.join(", ");
 
-    function displayReceipt() {
-      const { token, name, gender, tests } = getQueryParams();
 
-      document.getElementById("nameDisplay").textContent = name || "N/A";
-      document.getElementById("genderDisplay").textContent = gender || "N/A";
-      document.getElementById("tokenDisplay").textContent = token || "N/A";
-      document.getElementById("dateTimeDisplay").textContent = formatDateTime();
-
-      const testList = document.getElementById("testList");
-      if (Array.isArray(tests) && tests.length) {
-        testList.innerHTML = tests.map(t => `<li>${t}</li>`).join("");
-      } else {
-        testList.innerHTML = "<li>No tests selected</li>";
+      if (!token || !name) {
+        alert("No diagnosis booking found. Please book again.");
+        window.location.href = "bloodtestbook.html";
+        return;
       }
 
-      if (token) {
-        QRCode.toCanvas(document.createElement('canvas'), token, { width: 100 }, function (err, canvas) {
-          if (!err) document.getElementById("qrcode").appendChild(canvas);
-        });
-      }
-    }
+      document.getElementById("token").textContent = token;
+      document.getElementById("name").textContent = name;
+      document.getElementById("age").textContent = age;
+      document.getElementById("gender").textContent = gender;
+      document.getElementById("phone").textContent = phone;
+      document.getElementById("email").textContent = email;
+      document.getElementById("tests").textContent = tests.join(", ");
 
-    window.onload = displayReceipt;
+      // Optional: Clear after printing
+      localStorage.removeItem("dxToken");
+    });
   </script>
-
 </body>
 </html>
