@@ -194,6 +194,18 @@
       width: 100%;
       font-weight: bold;
     }
+.cashfree-button {
+  display: block;
+  margin-bottom: 15px;
+  cursor: pointer;
+}
+.cashfree-button .button-container {
+  transition: transform 0.2s ease;
+}
+
+.cashfree-button:hover .button-container {
+  transform: scale(1.03);
+}
 
     #hospitalConfirmation {
       display: none;
@@ -277,16 +289,16 @@
       <span class="close-icon" id="modalCloseBtn">&times;</span>
       <h3>Choose Payment Option</h3>
 
-      <button type="button" class="cashfree-button">
+     <div class="cashfree-button" style="cursor:pointer;">
   <div class="button-container">
     <img src="https://cashfree-checkoutcartimages-prod.cashfree.com/ChatGPT%20Image%20Apr%2019,%202025,%2001_22_02%20AMB8j5ovlrsvg0_prod.png" alt="logo" class="logo-container">
     <div class="text-container">
       <div class="primary-text">Pay Now</div>
     </div>
   </div>
+</div>
+
 </button>
-
-
       <button class="payment-option" id="payHospitalBtn">Pay at Hospital</button>
 
       <div id="hospitalConfirmation">
