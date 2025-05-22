@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="ChatGPT Image Apr 19, 2025, 01_22_02 AM.png">
+  <title>Admin Dashboard - OP & Diagnosis Bookings</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f0fbfb;
+      padding: 40px;
+      margin: 0;
+      animation: fadeIn 0.6s ease-in;
+    }
+
+    h1 {
+      text-align: center;
+      color: #00a6b8;
+      margin-top: 40px;
+      animation: slideIn 0.6s ease-out;
+    }
+
+    .section {
+      margin-top: 50px;
+      animation: fadeInTable 0.8s ease;
+    }
+
+    .filter {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .filter input {
+      padding: 10px 16px;
+      border-radius: 12px;
+      border: 1px solid #ccc;
+      width: 260px;
+      font-size: 16px;
+      transition: box-shadow 0.3s ease;
+    }
+
+    .filter input:focus {
+      outline: none;
+      box-shadow: 0 0 8px #00a6b8;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    th, td {
+      padding: 14px 16px;
+      border: 1px solid #e0e0e0;
+      text-align: left;
+    }
+
+    th {
+      background: linear-gradient(135deg, #00acc1, #007e91);
+      color: white;
+      font-weight: 600;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9fdfd;
+    }
+
+    tr:hover {
+      background-color: #e2f4f4;
+      transition: background-color 0.3s;
+    }
+
+    .note {
+      margin-top: 30px;
+      text-align: center;
+      color: #888;
+    }
+
+    .loader {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid #00acc1;
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      vertical-align: middle;
+    }
+
+    #logoutBtn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #ff5b5b;
+      color: white;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: bold;
+      z-index: 9999;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      transition: background 0.3s ease;
+    }
+
+    #logoutBtn:hover {
+      background: #d32f2f;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInTable {
+      from { opacity: 0; transform: scale(0.98); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <button id="logoutBtn">🚪 Logout</button>
+
+  <h1>🗂️ OP Bookings</h1>
+  <div class="filter">
+    <input type="text" id="searchInput" placeholder="🔍 Search by name or phone...">
+  </div>
+  <div class="section">
+    <table>
+      <thead>
+        <tr>
+          <th>Token</th>
+          <th>Name</th>
+          <th>Phone</th>
+          <th>Department</th>
+          <th>Date</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+      <tbody id="appointmentTable"></tbody>
+    </table>
+  </div>
+
+  <h1>🧪 Diagnosis Bookings</h1>
+  <div class="section">
+    <table>
+      <thead>
+        <tr>
+          <th>Token</th>
+          <th>Name</th>
+          <th>Gender</th>
+          <th>Phone</th>
+          <th>Email</th>
+          <th>Age</th>
+          <th>Tests</th>
+        </tr>
+      </thead>
+      <tbody id="diagnosisTable"></tbody>
+    </table>
+  </div>
+
+  <div class="note" id="noteMessage">
+    <span class="loader"></span> Loading data...
+  </div>
+
+  <script>
+    const appointmentTable = document.getElementById('appointmentTable');
+    const diagnosisTable = document.getElementById('diagnosisTable');
+    const searchInput = document.getElementById('searchInput');
+    const note = document.getElementById('noteMessage');
+    let appointments = [];
+
+    async function loadAppointments() {
+      try {
+        const res = await fetch('https://hospital-backend-78ur.onrender.com/admin/appointments');
+        appointments = await res.json();
+        renderAppointments(appointments);
+      } catch (err) {
+        note.innerHTML = '⚠️ Failed to load OP bookings.';
+      }
+    }
+
+    function renderAppointments(data) {
+      appointmentTable.innerHTML = '';
+      if (!data.length) {
+        note.innerHTML = '📭 No OP bookings found.';
+        return;
+      }
+      note.innerHTML = '';
+      data.forEach(item => {
+        appointmentTable.innerHTML += `
+          <tr>
+            <td>${item.token || '—'}</td>
+            <td>${item.name}</td>
+            <td>${item.phone}</td>
+            <td>${item.department || '—'}</td>
+            <td>${item.date || '—'}</td>
+            <td>₹${item.amount || 0}</td>
+          </tr>`;
+      });
+    }
+
+    async function loadDiagnosis() {
+      try {
+        const res = await fetch('https://hospital-backend-qh56.onrender.com/admin/diagnosis');
+        const diagnosis = await res.json();
+        renderDiagnosis(diagnosis);
+      } catch (err) {
+        diagnosisTable.innerHTML = '<tr><td colspan="7">⚠️ Failed to load diagnosis bookings.</td></tr>';
+      }
+    }
+
+    function renderDiagnosis(data) {
+      diagnosisTable.innerHTML = '';
+      if (!data.length) {
+        diagnosisTable.innerHTML = '<tr><td colspan="7">📭 No diagnosis bookings found.</td></tr>';
+        return;
+      }
+      data.forEach(item => {
+        diagnosisTable.innerHTML += `
+          <tr>
+            <td>${item.token}</td>
+            <td>${item.name}</td>
+            <td>${item.gender}</td>
+            <td>${item.phone}</td>
+            <td>${item.email}</td>
+            <td>${item.age || '—'}</td>
+            <td>${(item.tests || []).join(', ')}</td>
+          </tr>`;
+      });
+    }
+
+    searchInput.addEventListener('input', () => {
+      const query = searchInput.value.toLowerCase();
+      const filtered = appointments.filter(item =>
+        item.name.toLowerCase().includes(query) || item.phone.includes(query)
+      );
+      renderAppointments(filtered);
+    });
+
+    loadAppointments();
+    loadDiagnosis();
+
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      localStorage.removeItem('paymentConfirmed');
+      localStorage.removeItem('appointmentToken');
+      window.location.href = 'admin.html';
+    });
+  </script>
+</body>
+</html>

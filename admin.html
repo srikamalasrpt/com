@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="ChatGPT Image Apr 19, 2025, 01_22_02 AM.png">
+  <title>Admin Login - OP Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #00b894, #00acc1);
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn 0.6s ease-in-out;
+    }
+
+    .login-box {
+      background: white;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      width: 100%;
+      max-width: 360px;
+      animation: slideIn 0.6s ease-out;
+    }
+
+    .login-box h2 {
+      color: #00acc1;
+      margin-bottom: 25px;
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    .login-box input[type="password"] {
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 20px;
+      border: 2px solid #eee;
+      border-radius: 12px;
+      font-size: 16px;
+      transition: border-color 0.3s;
+    }
+
+    .login-box input:focus {
+      outline: none;
+      border-color: #00b894;
+      box-shadow: 0 0 8px rgba(0, 185, 148, 0.3);
+    }
+
+    .login-box button {
+      width: 100%;
+      padding: 14px;
+      font-size: 16px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(to right, #00b894, #00acc1);
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s ease-in-out;
+    }
+
+    .login-box button:hover {
+      transform: scale(1.03);
+      background: linear-gradient(to right, #00acc1, #007e6a);
+    }
+
+    .error {
+      color: #c0392b;
+      font-size: 14px;
+      margin-top: 10px;
+      height: 20px;
+    }
+
+    .dashboard {
+      display: none;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 400px) {
+      .login-box {
+        padding: 30px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Inside <body> -->
+<div class="login-box" id="loginBox">
+  <h2>🔐 Admin Login</h2>
+  <form id="loginForm">
+    <input type="password" id="adminPassword" placeholder="Enter admin password" required />
+    <button type="submit">Login</button>
+    <div class="error" id="errorBox"></div>
+  </form>
+</div>
+
+
+  <div class="dashboard" id="dashboard">
+    <iframe src="admin-dashboard.html" style="border:none;width:100vw;height:100vh;"></iframe>
+  </div>
+
+ <script>
+  const correctPassword = 'kamala@6665';
+  const form = document.getElementById('loginForm');
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault(); // prevent actual form submission
+    validateLogin();
+  });
+
+  function validateLogin() {
+    const input = document.getElementById('adminPassword').value;
+    const errorBox = document.getElementById('errorBox');
+
+    if (input === correctPassword) {
+      document.getElementById('loginBox').style.display = 'none';
+      document.getElementById('dashboard').style.display = 'block';
+    } else {
+      errorBox.textContent = '❌ Incorrect password. Please try again.';
+    }
+  }
+</script>
+</body>
+</html>
