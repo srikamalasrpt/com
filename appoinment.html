@@ -297,8 +297,6 @@
     </div>
   </div>
 </div>
-
-</button>
       <button class="payment-option" id="payHospitalBtn">Pay at Hospital</button>
 
       <div id="hospitalConfirmation">
@@ -375,10 +373,11 @@
   localStorage.setItem('paymentConfirmed', 'true');
   modal.style.display = 'none'; // ✅ optional cleanup
   window.location.href = 'receipt.html';
-}
-,
+  
+},
       onFailure: function (err) {
         alert('Payment failed or canceled. Please try again.');
+        console.error('Cashfree error:', error);
       }
     });
   } catch (error) {
