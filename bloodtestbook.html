@@ -311,26 +311,26 @@
     e.preventDefault();
 
     const name = document.getElementById("patientName").value.trim();
-    const gender = document.querySelector('input[name="gender"]:checked')?.value;
-    const phone = document.getElementById("phone").value.trim();
-    const email = document.getElementById("email").value.trim();
+const gender = document.querySelector('input[name="gender"]:checked')?.value;
+const phone = document.getElementById("phone").value.trim();
+const email = document.getElementById("email").value.trim();
+const age = document.getElementById("age").value.trim();
+const checkboxes = document.querySelectorAll('input[name="tests"]:checked');
+const selectedTests = Array.from(checkboxes).map(cb => cb.value);
 
-    const checkboxes = document.querySelectorAll('input[name="tests"]:checked');
-    const selectedTests = Array.from(checkboxes).map(cb => cb.value);
+if (!name || !gender || !phone || !email || !age || selectedTests.length === 0) {
+  alert("Please fill in all fields and select at least one test.");
+  return;
+}
 
-    if (!name || !gender || !phone || !email || selectedTests.length === 0) {
-      alert("Please fill in all fields and select at least one test.");
-      return;
-    }
+localStorage.setItem('dxToken', token);
+localStorage.setItem('dxName', name);
+localStorage.setItem('dxGender', gender);
+localStorage.setItem('dxPhone', phone);
+localStorage.setItem('dxEmail', email);
+localStorage.setItem('dxAge', age);  // ✅ ADD THIS
+localStorage.setItem('dxTests', JSON.stringify(selectedTests));
 
-    const token = `KAMALA(DIA):${String(tokenCounter).padStart(3, '0')}`;
-    localStorage.setItem('kamalaDiaToken', tokenCounter);
-    localStorage.setItem('dxToken', token);
-    localStorage.setItem('dxName', name);
-    localStorage.setItem('dxGender', gender);
-    localStorage.setItem('dxPhone', phone);
-    localStorage.setItem('dxEmail', email);
-    localStorage.setItem('dxTests', JSON.stringify(selectedTests));
 
     // ✅ SAVE TO RENDER BACKEND
     try {
