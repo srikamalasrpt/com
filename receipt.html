@@ -222,7 +222,7 @@ img{
 
     if (paid !== 'true' || !token) {
       alert("❌ No valid payment found. Please complete your appointment payment.");
-      window.location.href = 'appoinment.html'; // redirect back to form
+      window.location.href = 'appoinment.html'; // Make sure this matches your actual file name
       return;
     }
 
@@ -235,16 +235,12 @@ img{
     document.getElementById('token').textContent = token;
 
     const paymentId = new URLSearchParams(window.location.search).get('payment_id');
-    if (paymentId) {
-      document.getElementById('paymentId').textContent = paymentId;
-      localStorage.setItem('paymentId', paymentId);
-    } else {
-      document.getElementById('paymentId').textContent = 'N/A';
-    }
+    document.getElementById('paymentId').textContent = paymentId || 'N/A';
 
-    // Optional: Clear the flag after use to prevent reuse
+    // Clear paymentConfirmed to prevent reaccess
     localStorage.removeItem('paymentConfirmed');
   });
 </script>
+
 </body>
 </html>
