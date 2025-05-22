@@ -288,7 +288,7 @@ document.querySelector('.cashfree-button').addEventListener('click', async () =>
   localStorage.setItem('appointmentDate', date);
 
   try {
-    const res = await fetch('https://hospital-backend-qh56.onrender.com/create-session', {
+    const res = await fetch('https://hospital-backend-78ur.onrender.com/create-session', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name, phone, amount: 2 })
