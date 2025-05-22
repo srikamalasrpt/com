@@ -277,14 +277,15 @@
       <span class="close-icon" id="modalCloseBtn">&times;</span>
       <h3>Choose Payment Option</h3>
 
-      <a href="https://payments.cashfree.com/forms?code=op-booking&redirect_url=https://srikamalasrpt.github.io/com/receipt.html" target="_blank" class="cashfree-button">
-        <div class="button-container">
-          <img src="https://cashfree-checkoutcartimages-prod.cashfree.com/ChatGPT%20Image%20Apr%2019,%202025,%2001_22_02%20AMB8j5ovlrsvg0_prod.png" alt="logo" class="logo-container">
-          <div class="text-container">
-            <div class="primary-text">Pay Now</div>
-          </div>
-        </div>
-      </a>
+      <button type="button" class="cashfree-button">
+  <div class="button-container">
+    <img src="https://cashfree-checkoutcartimages-prod.cashfree.com/ChatGPT%20Image%20Apr%2019,%202025,%2001_22_02%20AMB8j5ovlrsvg0_prod.png" alt="logo" class="logo-container">
+    <div class="text-container">
+      <div class="primary-text">Pay Now</div>
+    </div>
+  </div>
+</button>
+
 
       <button class="payment-option" id="payHospitalBtn">Pay at Hospital</button>
 
@@ -359,9 +360,11 @@
     const cashfree = new Cashfree(sessionId);
     cashfree.redirect({
       onSuccess: function (data) {
-        localStorage.setItem('paymentConfirmed', 'true');
-        window.location.href = 'receipt.html';
-      },
+  localStorage.setItem('paymentConfirmed', 'true');
+  modal.style.display = 'none'; // ✅ optional cleanup
+  window.location.href = 'receipt.html';
+}
+,
       onFailure: function (err) {
         alert('Payment failed or canceled. Please try again.');
       }
