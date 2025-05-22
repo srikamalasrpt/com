@@ -311,30 +311,31 @@
     e.preventDefault();
 
     const name = document.getElementById("patientName").value.trim();
-const gender = document.querySelector('input[name="gender"]:checked')?.value;
-const phone = document.getElementById("phone").value.trim();
-const email = document.getElementById("email").value.trim();
-const age = document.getElementById("age").value.trim();
-const checkboxes = document.querySelectorAll('input[name="tests"]:checked');
-const selectedTests = Array.from(checkboxes).map(cb => cb.value);
+    const gender = document.querySelector('input[name="gender"]:checked')?.value;
+    const phone = document.getElementById("phone").value.trim(); // fixed ID
+    const email = document.getElementById("email").value.trim(); // fixed ID
+    const age = document.getElementById("age").value.trim(); // added
+    const checkboxes = document.querySelectorAll('input[name="tests"]:checked');
+    const selectedTests = Array.from(checkboxes).map(cb => cb.value);
 
-if (!name || !gender || !phone || !email || !age || selectedTests.length === 0) {
-  alert("Please fill in all fields and select at least one test.");
-  return;
-}
+    if (!name || !gender || !phone || !email || !age || selectedTests.length === 0) {
+      alert("Please fill in all fields and select at least one test.");
+      return;
+    }
 
-localStorage.setItem('dxToken', token);
-localStorage.setItem('dxName', name);
-localStorage.setItem('dxGender', gender);
-localStorage.setItem('dxPhone', phone);
-localStorage.setItem('dxEmail', email);
-localStorage.setItem('dxAge', age);  // ✅ ADD THIS
-localStorage.setItem('dxTests', JSON.stringify(selectedTests));
+    const token = `KAMALA(DIA):${String(tokenCounter).padStart(3, '0')}`;
+    localStorage.setItem('kamalaDiaToken', tokenCounter);
+    localStorage.setItem('dxToken', token);
+    localStorage.setItem('dxName', name);
+    localStorage.setItem('dxGender', gender);
+    localStorage.setItem('dxPhone', phone);
+    localStorage.setItem('dxEmail', email);
+    localStorage.setItem('dxAge', age);
+    localStorage.setItem('dxTests', JSON.stringify(selectedTests));
 
-
-    // ✅ SAVE TO RENDER BACKEND
+    // ✅ SAVE TO BACKEND
     try {
-      await fetch("https://hospital-backend-78ur.onrender.com/save-diagnosis", {
+      await fetch("https://hospital-backend-qh56.onrender.com/save-diagnosis", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -343,11 +344,11 @@ localStorage.setItem('dxTests', JSON.stringify(selectedTests));
           gender,
           phone,
           email,
+          age,  // ✅ included in payload
           tests: selectedTests
         })
       });
 
-      // ✅ REDIRECT TO RECEIPT
       window.location.href = `bloodtestreceipt.html`;
     } catch (err) {
       console.error("Error saving diagnosis:", err);
@@ -361,6 +362,7 @@ localStorage.setItem('dxTests', JSON.stringify(selectedTests));
     chatbot.style.display = chatbot.style.display === "flex" ? "none" : "flex";
   });
 </script>
+
 
 </body>
 </html>
