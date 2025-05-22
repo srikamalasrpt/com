@@ -349,7 +349,10 @@
         })
       });
 
-      window.location.href = `bloodtestreceipt.html`;
+      setTimeout(() => {
+  window.location.href = "bloodtestreceipt.html";
+}, 200); // Wait 200ms to ensure localStorage is flushed
+
     } catch (err) {
       console.error("Error saving diagnosis:", err);
       alert("❌ Failed to save booking. Please try again later.");
@@ -366,3 +369,4 @@
 
 </body>
 </html>
+
