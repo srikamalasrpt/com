@@ -304,34 +304,62 @@
 
   <!-- Script -->
   <script>
-    let tokenCounter = 1;
+  let tokenCounter = localStorage.getItem('kamalaDiaToken');
+  tokenCounter = tokenCounter ? parseInt(tokenCounter) + 1 : 1;
 
-    document.getElementById("bloodTestForm").addEventListener("submit", function (e) {
-      e.preventDefault();
+  document.getElementById("bloodTestForm").addEventListener("submit", async function (e) {
+    e.preventDefault();
 
-      const name = document.getElementById("patientName").value.trim();
-      const gender = document.querySelector('input[name="gender"]:checked')?.value;
-      const checkboxes = document.querySelectorAll('input[name="tests"]:checked');
-      const selectedTests = Array.from(checkboxes).map(cb => cb.value);
+    const name = document.getElementById("patientName").value.trim();
+    const gender = document.querySelector('input[name="gender"]:checked')?.value;
+    const phone = document.getElementById("patientPhone").value.trim();
+    const email = document.getElementById("patientEmail").value.trim();
+    const checkboxes = document.querySelectorAll('input[name="tests"]:checked');
+    const selectedTests = Array.from(checkboxes).map(cb => cb.value);
 
-      if (!name || !gender || selectedTests.length === 0) {
-        alert("Please fill in all required fields and select at least one test.");
-        return;
-      }
+    if (!name || !gender || !phone || !email || selectedTests.length === 0) {
+      alert("Please fill in all fields and select at least one test.");
+      return;
+    }
 
-      const token = `KAMALA(DIA):${String(tokenCounter).padStart(3, '0')}`;
-      tokenCounter++;
+    const token = `KAMALA(DIA):${String(tokenCounter).padStart(3, '0')}`;
+    localStorage.setItem('kamalaDiaToken', tokenCounter);
+    localStorage.setItem('dxToken', token);
+    localStorage.setItem('dxName', name);
+    localStorage.setItem('dxGender', gender);
+    localStorage.setItem('dxPhone', phone);
+    localStorage.setItem('dxEmail', email);
+    localStorage.setItem('dxTests', JSON.stringify(selectedTests));
 
-      const url = `bloodtestreceipt.html?token=${encodeURIComponent(token)}&tests=${encodeURIComponent(JSON.stringify(selectedTests))}&gender=${encodeURIComponent(gender)}&name=${encodeURIComponent(name)}`;
-      window.location.href = url;
-    });
+    // ✅ SAVE TO RENDER BACKEND
+    try {
+      await fetch("https://hospital-backend-qh56.onrender.com/save-diagnosis", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          token,
+          name,
+          gender,
+          phone,
+          email,
+          tests: selectedTests
+        })
+      });
 
-    // Chatbot toggle
-    document.getElementById("chat-toggle").addEventListener("click", () => {
-      const chatbot = document.getElementById("chatbot");
-      chatbot.style.display = chatbot.style.display === "flex" ? "none" : "flex";
-    });
-  </script>
+      // ✅ REDIRECT TO RECEIPT
+      window.location.href = `bloodtestreceipt.html`;
+    } catch (err) {
+      console.error("Error saving diagnosis:", err);
+      alert("❌ Failed to save booking. Please try again later.");
+    }
+  });
+
+  // Chatbot toggle
+  document.getElementById("chat-toggle").addEventListener("click", () => {
+    const chatbot = document.getElementById("chatbot");
+    chatbot.style.display = chatbot.style.display === "flex" ? "none" : "flex";
+  });
+</script>
 
 </body>
 </html>
