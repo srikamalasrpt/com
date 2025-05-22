@@ -312,8 +312,9 @@
 
     const name = document.getElementById("patientName").value.trim();
     const gender = document.querySelector('input[name="gender"]:checked')?.value;
-    const phone = document.getElementById("patientPhone").value.trim();
-    const email = document.getElementById("patientEmail").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const email = document.getElementById("email").value.trim();
+
     const checkboxes = document.querySelectorAll('input[name="tests"]:checked');
     const selectedTests = Array.from(checkboxes).map(cb => cb.value);
 
