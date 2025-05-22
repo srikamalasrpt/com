@@ -277,7 +277,7 @@
       <span class="close-icon" id="modalCloseBtn">&times;</span>
       <h3>Choose Payment Option</h3>
 
-      <a href="https://payments.cashfree.com/forms?code=op-booking&redirect_url=https://srikamalasrpt.github.io/hospital-frontend/receipt.html" target="_blank" class="cashfree-button">
+      <a href="https://payments.cashfree.com/forms?code=op-booking&redirect_url=https://srikamalasrpt.github.io/com/receipt.html" target="_blank" class="cashfree-button">
         <div class="button-container">
           <img src="https://cashfree-checkoutcartimages-prod.cashfree.com/ChatGPT%20Image%20Apr%2019,%202025,%2001_22_02%20AMB8j5ovlrsvg0_prod.png" alt="logo" class="logo-container">
           <div class="text-container">
@@ -294,6 +294,7 @@
       </div>
     </div>
   </div>
+<script src="https://sdk.cashfree.com/js/ui/2.0.0/cashfree.prod.js"></script>
 
   <script>
     const form = document.getElementById('appointmentForm');
@@ -321,33 +322,56 @@
       }
     });
 
-    document.querySelector('.cashfree-button').addEventListener('click', () => {
-      const name = document.getElementById('name').value;
-      const age = document.getElementById('age').value;
-      const phone = document.getElementById('phone').value;
-      const department = document.getElementById('department').value;
-      const date = document.getElementById('date').value;
-      const gender = document.querySelector('input[name="gender"]:checked').value;
+    document.querySelector('.cashfree-button').addEventListener('click', async () => {
+  const name = document.getElementById('name').value;
+  const age = document.getElementById('age').value;
+  const phone = document.getElementById('phone').value;
+  const department = document.getElementById('department').value;
+  const date = document.getElementById('date').value;
+  const gender = document.querySelector('input[name="gender"]:checked').value;
 
-      let token = localStorage.getItem('kamalaTokenNumber');
-      token = token ? parseInt(token) + 1 : 1;
-      const formattedToken = `KAMALA_OP(${String(token).padStart(3, '0')})`;
+  // Save data to localStorage
+  let token = localStorage.getItem('kamalaTokenNumber');
+  token = token ? parseInt(token) + 1 : 1;
+  const formattedToken = `KAMALA_OP(${String(token).padStart(3, '0')})`;
 
-      localStorage.setItem('kamalaTokenNumber', token);
-      localStorage.setItem('appointmentToken', formattedToken);
-      localStorage.setItem('patientName', name);
-      localStorage.setItem('patientAge', age);
-      localStorage.setItem('patientPhone', phone);
-      localStorage.setItem('patientGender', gender);
-      localStorage.setItem('patientDepartment', department);
-      localStorage.setItem('appointmentDate', date);
+  localStorage.setItem('kamalaTokenNumber', token);
+  localStorage.setItem('appointmentToken', formattedToken);
+  localStorage.setItem('patientName', name);
+  localStorage.setItem('patientAge', age);
+  localStorage.setItem('patientPhone', phone);
+  localStorage.setItem('patientGender', gender);
+  localStorage.setItem('patientDepartment', department);
+  localStorage.setItem('appointmentDate', date);
+
+  // Make API call to backend
+  try {
+    const res = await fetch('https://hospital-backend-qh56.onrender.com/create-session', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, phone, amount: 2 }) // amount can be dynamic
     });
 
-    payHospitalBtn.addEventListener('click', () => {
-      document.querySelector('#hospitalConfirmation').style.display = 'block';
-      document.querySelector('.cashfree-button').style.display = 'none';
-      payHospitalBtn.style.display = 'none';
+    const data = await res.json();
+    const sessionId = data.sessionId;
+
+    // Launch Cashfree payment
+    const cashfree = new Cashfree(sessionId);
+    cashfree.redirect({
+      onSuccess: function (data) {
+        localStorage.setItem('paymentConfirmed', 'true');
+        window.location.href = 'receipt.html';
+      },
+      onFailure: function (err) {
+        alert('Payment failed or canceled. Please try again.');
+      }
     });
+  } catch (error) {
+    console.error('Error creating payment session:', error);
+    alert('Error creating payment session. Please try again later.');
+  }
+});
+
   </script>
 
 </body>
