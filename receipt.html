@@ -217,10 +217,12 @@ img{
 
   <script>
   document.addEventListener('DOMContentLoaded', () => {
+    const paid = localStorage.getItem('paymentConfirmed');
     const token = localStorage.getItem('appointmentToken');
-    if (!token) {
-      alert('No appointment data found. Please book an appointment first.');
-      window.location.href = 'index.html';
+
+    if (paid !== 'true' || !token) {
+      alert("❌ No valid payment found. Please complete your appointment payment.");
+      window.location.href = 'appoinment.html'; // redirect back to form
       return;
     }
 
@@ -232,18 +234,17 @@ img{
     document.getElementById('date').textContent = localStorage.getItem('appointmentDate');
     document.getElementById('token').textContent = token;
 
-    // Optional: Payment ID (if available)
     const paymentId = new URLSearchParams(window.location.search).get('payment_id');
     if (paymentId) {
       document.getElementById('paymentId').textContent = paymentId;
-      localStorage.setItem('paymentId', paymentId); // Store if needed
+      localStorage.setItem('paymentId', paymentId);
     } else {
       document.getElementById('paymentId').textContent = 'N/A';
     }
+
+    // Optional: Clear the flag after use to prevent reuse
+    localStorage.removeItem('paymentConfirmed');
   });
 </script>
-
-
-  
 </body>
 </html>
