@@ -5,6 +5,24 @@
   <title>Book Appointment - Sri Kamala Hospital</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://sdk.cashfree.com/js/ui/2.0.0/cashfree.prod.js"></script>
+  <script>
+  Cashfree.init({
+    mode: "PROD", // use "TEST" if you're in test mode
+    layout: "POPUP",
+    checkout: {
+      onSuccess: function (data) {
+        const orderId = data.order.order_id;
+        const paymentId = data.order.payment_id;
+        window.location.href = `receipt.html?order_id=${orderId}&payment_id=${paymentId}`;
+      },
+      onFailure: function (data) {
+        alert("❌ Payment failed or cancelled.");
+        console.error("Cashfree Checkout Failure:", data);
+      }
+    }
+  });
+</script>
+
   <style>
     body {
       margin: 0;
@@ -291,7 +309,7 @@ document.querySelector('.cashfree-button').addEventListener('click', async () =>
       body: JSON.stringify({
         name: name,
         phone: phone,
-        amount: 1 // your desired OP cost
+        amount: 1 // your OP fee
       })
     });
 
@@ -304,7 +322,7 @@ document.querySelector('.cashfree-button').addEventListener('click', async () =>
     }
 
     const cashfree = new Cashfree(sessionId);
-    cashfree.redirect(); // ✅ DO NOT use callbacks
+    cashfree.checkout(); // ✅ Popup checkout with manual redirect
 
   } catch (error) {
     console.error('Error creating payment session:', error);
@@ -316,7 +334,7 @@ payHospitalBtn.addEventListener('click', () => {
   document.getElementById('hospitalConfirmation').style.display = 'block';
   payHospitalBtn.style.display = 'none';
 });
-
 </script>
+
 </body>
 </html>
