@@ -308,7 +308,8 @@ if (!sessionId) {
 
 
     const cashfree = new Cashfree(sessionId);
-    cashfree.redirect();
+cashfree.redirect(); // 🚨 NO CALLBACKS
+
     
   } catch (error) {
     console.error('Error creating payment session:', error);
