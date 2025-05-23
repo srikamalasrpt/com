@@ -289,30 +289,27 @@ document.querySelector('.cashfree-button').addEventListener('click', async () =>
 
   try {
     const res = await fetch('https://hospital-backend-78ur.onrender.com/create-session', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, phone, amount: 2 })
-    });
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+  "name": "Test",
+  "phone": "1234567890",
+  "amount": 2
+})
+});
 
-    const data = await res.json();
-    const sessionId = data.sessionId;
+const data = await res.json();
+const sessionId = data.sessionId;
 
-    if (!sessionId) {
-      alert('Failed to get payment session. Please try again.');
-      return;
-    }
+if (!sessionId) {
+  alert('Failed to get payment session. Please try again.');
+  return;
+}
+
 
     const cashfree = new Cashfree(sessionId);
-    cashfree.redirect({
-      onSuccess: function () {
-        localStorage.setItem('paymentConfirmed', 'true');
-        window.location.href = 'receipt.html';
-      },
-      onFailure: function (err) {
-        alert('Payment failed or canceled. Please try again.');
-        console.error('Cashfree error:', err);
-      }
-    });
+    cashfree.redirect();
+    
   } catch (error) {
     console.error('Error creating payment session:', error);
     alert('Error creating payment session. Please try again later.');
@@ -326,3 +323,4 @@ payHospitalBtn.addEventListener('click', () => {
 </script>
 </body>
 </html>
+
