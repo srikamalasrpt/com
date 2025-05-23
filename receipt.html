@@ -217,8 +217,9 @@ img{
 
   <script>
   document.addEventListener('DOMContentLoaded', () => {
-    const token = localStorage.getItem('appointmentToken');
-    const payment_id = new URLSearchParams(window.location.search).get('payment_id');
+    const orderId = new URLSearchParams(window.location.search).get('order_id');
+const paymentId = new URLSearchParams(window.location.search).get('payment_id');
+
 
     if (!payment_id || !token) {
       alert("❌ No valid payment found. Please complete your appointment payment.");
