@@ -217,12 +217,12 @@ img{
 
   <script>
   document.addEventListener('DOMContentLoaded', () => {
-    const paid = localStorage.getItem('paymentConfirmed');
     const token = localStorage.getItem('appointmentToken');
+    const payment_id = new URLSearchParams(window.location.search).get('payment_id');
 
-    if (paid !== 'true' || !token) {
+    if (!payment_id || !token) {
       alert("❌ No valid payment found. Please complete your appointment payment.");
-      window.location.href = 'appoinment.html'; // Make sure this matches your actual file name
+      window.location.href = 'appoinment.html';
       return;
     }
 
@@ -233,14 +233,12 @@ img{
     document.getElementById('department').textContent = localStorage.getItem('patientDepartment');
     document.getElementById('date').textContent = localStorage.getItem('appointmentDate');
     document.getElementById('token').textContent = token;
+    document.getElementById('paymentId').textContent = payment_id || 'N/A';
 
-    const paymentId = new URLSearchParams(window.location.search).get('payment_id');
-    document.getElementById('paymentId').textContent = paymentId || 'N/A';
-
-    // Clear paymentConfirmed to prevent reaccess
     localStorage.removeItem('paymentConfirmed');
   });
 </script>
+
 
 </body>
 </html>
