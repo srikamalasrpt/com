@@ -217,17 +217,16 @@ img{
 
   <script>
 document.addEventListener('DOMContentLoaded', async () => {
-  const orderId = new URLSearchParams(window.location.search).get('order_id');
+  const phone = localStorage.getItem("patientPhone");
   const paymentId = new URLSearchParams(window.location.search).get('payment_id');
 
-  if (!orderId || orderId.includes('{')) {
-  alert("❌ Missing or invalid order ID. Please contact support.");
-  return;
-}
-
+  if (!phone) {
+    alert("❌ Missing phone number. Cannot fetch appointment.");
+    return;
+  }
 
   try {
-    const res = await fetch(`https://hospital-backend-78ur.onrender.com/get-appointment?order_id=${orderId}`);
+    const res = await fetch(`https://hospital-backend-78ur.onrender.com/get-latest-appointment?phone=${phone}`);
     const data = await res.json();
 
     document.getElementById('token').textContent = data.token || '-';
@@ -239,13 +238,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('paymentId').textContent = paymentId || '-';
 
   } catch (err) {
-    console.error('Error loading receipt:', err);
+    console.error('❌ Error loading receipt:', err);
     alert("❌ Failed to load appointment details.");
   }
 });
 </script>
-
-
-
 </body>
 </html>
