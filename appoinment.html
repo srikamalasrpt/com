@@ -308,15 +308,20 @@ document.querySelector('.cashfree-button').addEventListener('click', async () =>
   localStorage.setItem('appointmentDate', date);
 
   try {
-    const res = await fetch('https://hospital-backend-78ur.onrender.com/generate-payment-link', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name: name,
-        phone: phone,
-        amount: 1 // or whatever your OP fee is
-      })
-    });
+   const res = await fetch('https://hospital-backend-78ur.onrender.com/generate-payment-link', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    name,
+    age,
+    phone,
+    gender,
+    department,
+    appointmentDate: date,
+    token: formattedToken
+  })
+});
+
 
     const data = await res.json();
     const paymentLink = data.link_url;
