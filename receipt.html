@@ -220,10 +220,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   const orderId = new URLSearchParams(window.location.search).get('order_id');
   const paymentId = new URLSearchParams(window.location.search).get('payment_id');
 
-  if (!orderId) {
-    alert("❌ Missing order ID. Please try again.");
-    return;
-  }
+  if (!orderId || orderId.includes('{')) {
+  alert("❌ Missing or invalid order ID. Please contact support.");
+  return;
+}
+
 
   try {
     const res = await fetch(`https://hospital-backend-78ur.onrender.com/get-appointment?order_id=${orderId}`);
@@ -248,3 +249,4 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 </body>
 </html>
+
