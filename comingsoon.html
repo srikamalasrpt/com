@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Coming Soon - Sri Kamala Hospital</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(-45deg, #0078d7, #00b894, #0050b8, #00796b);
+      background-size: 600% 600%;
+      animation: animateBG 15s ease infinite;
+      font-family: 'Segoe UI', sans-serif;
+      color: #fff;
+      overflow: hidden;
+    }
+
+    @keyframes animateBG {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+
+    .tilt-box {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 50px 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      backdrop-filter: blur(10px);
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 1.4rem;
+      margin-bottom: 20px;
+    }
+
+    .countdown {
+      font-size: 1.6rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+    .back-btn {
+  margin-top: 20px;
+  padding: 12px 25px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(to right, #ff6f61, #d84315);
+  color: white;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.back-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+  </style>
+</head>
+<body>
+
+  <div class="tilt-box" data-tilt data-tilt-scale="1.05">
+    <h1>✨ Coming Soon ✨</h1>
+    <p>Thank you for booking with Sri Kamala Hospital.</p>
+   
+    <div class="countdown" id="countdown">⏳ Loading countdown...</div>
+    <br>
+<button onclick="goHome()" class="back-btn">🏠 Back to Home</button>
+
+  </div>
+
+  <!-- 3D Tilt Effect -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.2/vanilla-tilt.min.js"></script>
+
+  <!-- Countdown Script -->
+  <script>
+    // Example: Target date 3 days from now
+    const targetDate = new Date();
+    targetDate.setDate(targetDate.getDate() + 90); // Change this dynamically if needed
+
+    function updateCountdown() {
+      const now = new Date();
+      const diff = targetDate - now;
+
+      if (diff <= 0) {
+        document.getElementById("countdown").textContent = "✅ Appointment confirmed!";
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      document.getElementById("countdown").textContent =
+        `⏳ We will be back with this feature in : 
+        ${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+     function goHome() {
+    window.location.href = "index.html"; // change this if your home page file is named differently
+  }
+  </script>
+
+</body>
+</html>
