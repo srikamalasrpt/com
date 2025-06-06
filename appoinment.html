@@ -2,350 +2,52 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Book Appointment - Sri Kamala Hospital</title>
+  <title>Redirecting to Appointment Page</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <script>
-  Cashfree.init({
-    mode: "PROD", // use "TEST" if you're in test mode
-    layout: "POPUP",
-    checkout: {
-      onSuccess: function (data) {
-        const orderId = data.order.order_id;
-        const paymentId = data.order.payment_id;
-        window.location.href = `receipt.html?order_id=${orderId}&payment_id=${paymentId}`;
-      },
-      onFailure: function (data) {
-        alert("❌ Payment failed or cancelled.");
-        console.error("Cashfree Checkout Failure:", data);
-      }
-    }
-  });
-</script>
-
   <style>
     body {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #f8fdfd;
-      color: #333;
-    }
-    header {
-      background-color: #e0f7fa;
-      padding: 20px 0;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    nav {
+      height: 100vh;
       display: flex;
       justify-content: center;
-      gap: 30px;
-      flex-wrap: wrap;
-    }
-    nav a {
-      text-decoration: none;
-      color: #00796b;
-      font-size: 18px;
-      font-weight: 600;
-      padding: 8px 16px;
-      border-radius: 6px;
-    }
-    nav a:hover {
-      background-color: #b2dfdb;
-      color: #004d40;
-      transform: scale(1.05);
-    }
-    nav a.active {
-      background-color: #00acc1;
-      color: #fff;
-    }
-    .container {
-      max-width: 500px;
-      margin: 60px auto;
-      padding: 30px;
-      background-color: white;
-      border-radius: 16px;
-      box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1);
-    }
-    h2 {
-      text-align: center;
-      color: #00b894;
-    }
-    input, select {
-      width: 100%;
-      padding: 12px;
-      margin-top: 8px;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-      font-size: 16px;
-    }
-    .gender-section {
-      margin-top: 20px;
-    }
-    .gender-options {
-      display: flex;
-      gap: 20px;
-    }
-    .gender-options input[type="radio"] {
-      display: none;
-    }
-    .gender-options label {
-      background-color: #e0f7fa;
-      color: #00796b;
-      padding: 10px 20px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: 600;
-    }
-    .gender-options input[type="radio"]:checked + label {
-      background-color: #00b894;
-      color: #fff;
-      border: 2px solid #00796b;
-      transform: scale(1.05);
-    }
-    .book-btn {
-      padding: 14px;
-      font-size: 18px;
-      font-weight: bold;
-      border: none;
-      border-radius: 12px;
-      background: linear-gradient(270deg, #0078d7, #00b894, #0050b8);
-      background-size: 600% 600%;
-      color: #fff;
-      cursor: pointer;
-      margin-top: 25px;
-      width: 100%;
-    }
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.6);
-    }
-    .modal-content {
-      background-color: #fff;
-      margin: 10% auto;
-      padding: 30px;
-      border-radius: 16px;
-      max-width: 400px;
-      text-align: center;
-      position: relative;
-    }
-    .close-icon {
-      position: absolute;
-      top: 15px;
-      right: 20px;
-      font-size: 24px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    .cashfree-button {
-      cursor: pointer;
-    }
-    .cashfree-button .button-container {
-      background: linear-gradient(135deg, #d4af37, #b08d28);
-      border-radius: 15px;
-      display: flex;
       align-items: center;
-      padding: 10px 15px;
-      justify-content: center;
+      flex-direction: column;
+      background: linear-gradient(to right, #00b894, #0078d7);
       color: white;
+      font-family: 'Segoe UI', sans-serif;
     }
-    .cashfree-button:hover .button-container {
-      transform: scale(1.03);
+
+    .spinner {
+      border: 6px solid rgba(255, 255, 255, 0.2);
+      border-top: 6px solid white;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+      margin-bottom: 20px;
     }
-    .logo-container {
-      width: 40px;
-      height: 40px;
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
-    .text-container {
-      margin-left: 12px;
-    }
-    .primary-text {
-      font-weight: bold;
-      font-size: 15px;
-    }
-    .payment-option {
-      background-color: #ccc;
-      border: none;
-      padding: 12px;
-      border-radius: 10px;
-      cursor: pointer;
-      width: 100%;
-      font-weight: bold;
-    }
-    #hospitalConfirmation {
-      display: none;
-      margin-top: 20px;
-      font-size: 16px;
-      color: #00796b;
+
+    h2 {
+      font-size: 1.5rem;
+      margin-top: 0;
     }
   </style>
 </head>
 <body>
 
-<header>
-  <nav>
-    <a href="index.html" class="active">Home</a>
-    <a href="services.html">Services</a>
-    <a href="diagnosis.html">Diagnosis</a>
-    <a href="contact.html">Contact</a>
-  </nav>
-</header>
+  <div class="spinner"></div>
+  <h2>Please wait... Redirecting to appointment page</h2>
 
-<div class="container">
-  <h2>Book Your Appointment</h2>
-  <form id="appointmentForm">
-    <label for="name">Full Name</label>
-    <input type="text" id="name" required>
-    <label for="age">Age</label>
-    <input type="number" id="age" required min="0">
-
-    <div class="gender-section">
-      <label>Gender:</label>
-      <div class="gender-options">
-        <input type="radio" id="male" name="gender" value="Male" required>
-        <label for="male">Male</label>
-        <input type="radio" id="female" name="gender" value="Female">
-        <label for="female">Female</label>
-        <input type="radio" id="other" name="gender" value="Other">
-        <label for="other">Other</label>
-      </div>
-    </div><br>
-
-    <label for="phone">Phone Number</label>
-    <input type="tel" id="phone" required>
-
-    <label for="department">Department</label>
-    <select id="department" required>
-      <option value="">Select Department</option>
-      <option value="General Medicine">General Medicine</option>
-      <option value="Cardiology">Cardiology</option>
-    </select>
-
-    <label for="date">Appointment Date</label>
-    <input type="date" id="date" required>
-
-    <button type="submit" class="book-btn">📅 Book Now</button>
-  </form>
-</div>
-
-<!-- Add this wrapper around your existing modal-content -->
-<div class="modal" id="paymentModal">
-  <div class="modal-content">
-    <span class="close-icon" id="modalCloseBtn">&times;</span>
-    <h3>Choose Payment Option</h3>
-
-    <!-- Your existing payment option form and buttons stay exactly as they are -->
-    <form>
-      <a href="https://payments.cashfree.com/forms/op-booking" target="_parent">
-        <div class="button-container" style="background: #2ca64a">
-          <img src="https://cashfree-checkoutcartimages-prod.cashfree.com/ChatGPT Image Apr 19, 2025, 01_22_02 AMs8kojk4dkci0_prod.png" alt="logo" class="logo-container">
-          Pay Now
-        </div>
-      </a>
-    </form>
-
-    <br>
-
-    <button class="payment-option" id="payHospitalBtn">Pay at Hospital</button>
-    <div id="hospitalConfirmation">
-      ✅ Go and pay at hospital and collect the receipt!
-      <p>Please arrive at least 20 minutes early. Payment can be made at the reception desk only.</p>
-    </div>
-  </div>
-</div>
-
-<script>
-const form = document.getElementById('appointmentForm');
-const modal = document.getElementById('paymentModal');
-const closeBtn = document.getElementById('modalCloseBtn');
-const payHospitalBtn = document.getElementById('payHospitalBtn');
-
-form.addEventListener('submit', function (e) {
-  e.preventDefault();
-  if (form.reportValidity()) {
-    modal.style.display = 'block';
-    form.querySelectorAll('input, select, button').forEach(el => el.disabled = true);
-  }
-});
-
-closeBtn.addEventListener('click', () => {
-  modal.style.display = 'none';
-  form.querySelectorAll('input, select, button').forEach(el => el.disabled = false);
-});
-
-window.addEventListener('click', function (e) {
-  if (e.target === modal) {
-    modal.style.display = 'none';
-    form.querySelectorAll('input, select, button').forEach(el => el.disabled = false);
-  }
-});
-
-document.querySelector('.cashfree-button').addEventListener('click', async () => {
-  const name = document.getElementById('name').value;
-  const age = document.getElementById('age').value;
-  const phone = document.getElementById('phone').value;
-  const department = document.getElementById('department').value;
-  const date = document.getElementById('date').value;
-  const gender = document.querySelector('input[name="gender"]:checked').value;
-
-  // Save details to localStorage for receipt.html
-  let token = localStorage.getItem('kamalaTokenNumber');
-  token = token ? parseInt(token) + 1 : 1;
-  const formattedToken = `KAMALA_OP(${String(token).padStart(3, '0')})`;
-
-  localStorage.setItem('kamalaTokenNumber', token);
-  localStorage.setItem('appointmentToken', formattedToken);
-  localStorage.setItem('patientName', name);
-  localStorage.setItem('patientAge', age);
-  localStorage.setItem('patientPhone', phone);
-  localStorage.setItem('patientGender', gender);
-  localStorage.setItem('patientDepartment', department);
-  localStorage.setItem('appointmentDate', date);
-
-  try {
-   const res = await fetch('https://hospital-backend-78ur.onrender.com/generate-payment-link', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({
-    name,
-    age,
-    phone,
-    gender,
-    department,
-    appointmentDate: date,
-    token: formattedToken
-  })
-});
-
-
-    const data = await res.json();
-    const paymentLink = data.link_url;
-
-    if (!paymentLink) {
-      alert('Failed to generate payment link.');
-      return;
-    }
-
-    // Redirect to Cashfree's payment link
-    window.location.href = paymentLink;
-
-  } catch (err) {
-    console.error('Error generating payment link:', err);
-    alert('An error occurred. Please try again.');
-  }
-});
-
-
-payHospitalBtn.addEventListener('click', () => {
-  document.getElementById('hospitalConfirmation').style.display = 'block';
-  payHospitalBtn.style.display = 'none';
-});
-</script>
+  <script>
+    setTimeout(() => {
+      window.location.href = "comingsoon.html";
+    }, 3000); // 3 seconds delay
+  </script>
 
 </body>
 </html>
